@@ -1,0 +1,24 @@
+{
+  "name": "sep_k21t1_chototvanlang_team5",
+  "version": "1.0.0",
+  "description": "Website Chợ Tốt Văn Lang",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PhuongDuy/SEP_K21T1_ChoTotVanLang_Team5.git"
+  },
+  "author": "Duy",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/PhuongDuy/SEP_K21T1_ChoTotVanLang_Team5/issues"
+  },
+  "homepage": "https://github.com/PhuongDuy/SEP_K21T1_ChoTotVanLang_Team5#readme",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.16.3",
+    "mongoose": "^5.0.14"
+  }
+}
