@@ -14,4 +14,4 @@ var UserStatusSchema = new mongoose.Schema({
         type: String,
     }
 });
-module.exports = mongoose.model('UserStatus', UserStatuschema); 
+module.exports = mongoose.model('UserStatus', UserStatusSchema); 
