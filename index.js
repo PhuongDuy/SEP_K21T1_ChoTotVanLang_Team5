@@ -19,9 +19,10 @@ var promsie = mongoose.connect('mongodb://DuyHo:hothanhphuongduy@ds135179.mlab.c
 
 app.set('view engine','ejs');
 //set views path
-app.set('views',path.join(  __dirname,'/app/views/backend/view'));
-
-app.use(express.static(__dirname + '/app/public'));
+// app.set('views',path.join(  __dirname,'/app/views/backend/view'));
+app.set('views',path.join(  __dirname,'/app/views'));
+app.use(express.static(__dirname + '/app/public/backend'));
+app.use(express.static(__dirname + '/app/public/frontend'));
 
 app.use(bodyParser.urlencoded({ extended: true}));
 app.use(bodyParser.json());
@@ -35,7 +36,39 @@ app.use(bodyParser.json());
 app.get('/ListOfPost',function(req,res){
     res.render('ListOfPost');
 });
+app.get('/index',function(req,res){
+    res.render('index');
+});
+app.get('/about',function(req,res){
+    res.render('about');
+});
+app.get('/contact',function(req,res){
+    res.render('contact');
+});
+app.get('/login',function(req,res){
+    res.render('login');
+});
+app.get('/viewdetail',function(req,res){
+    res.render('viewdetail');
+});
+app.get('/viewlistproject',function(req,res){
+    res.render('viewlistproject');
+});
+app.get('/index',function(req,res){
+    res.render('index');
+});
 
+// mongoose.connect("mongodb://DuyHo:hothanhphuongduy@ds135179.mlab.com:35179/sep_k21t1_team5",function(err, db){
+//     if (err) throw err;
+//     var product = db.collection('posts');
+//     products.find({}).toArray(function (err,data) {
+//         //nếu lỗi
+//         if (err) throw err;
+//         //nếu thành công
+//         console.log(data);
+//     });
+//     db.close();
+// });
 
 
 var port = process.env.port || 3000;

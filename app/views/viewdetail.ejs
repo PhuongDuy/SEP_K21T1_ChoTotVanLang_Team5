@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang='vi'>
+<head>
+	<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Chototvanlang</title>
+
+	<link href='views/user/css/main.min.css?v=1504933025550b1' type='text/css' rel='stylesheet'/>
+	<link href='views/user/css/responsive.min.css?v=1504933025556' type='text/css' rel='stylesheet'/>
+
+	
+</head>
+<body>
+	<div id='navigation_bar' class='simple_navigation_bar' data-state='ready'>
+		<div class='wrapper'>
+			<form id='frm_search'  class='clearfix' onsubmit="return false;">
+				<div class='keyword clearfix'>
+					<input type='text' name='keyword' autocomplete='off' placeholder='Nhập từ khoá...'/>
+					<button type='submit'><i class='fa fa-search'></i></button>
+					<div class='suggests'></div>
+				</div>
+				<a class='category' data-id='0' data-state='ready' data-root-id='0' data-root-name='Tất cả danh mục'>
+					<span class='text'>Tất cả danh mục</span>
+
+
+				</a>
+				<!-- style="background: #4ece61; margin: 0px 10px 0px 10px;border-radius: 2px;" -->
+			
+			</form>
+		</div>
+	</div>
+	<div class="clearfix"></div>
+
+	<script type="text/javascript">
+		var navBar = document.getElementById('navigation_bar'), classBar = ['simple_navigation_bar', 'fixed_navigation_bar'];
+
+		window.addEventListener('scroll', function(e) {
+			if (screen.availWidth < 1170) return false;
+
+			if (navBar.nextElementSibling.getClientRects()[0].bottom < 0 && navBar.className !== classBar[1]) {
+				navBar.className = classBar[1];
+			}
+			else if (navBar.nextElementSibling.getClientRects()[0].top > 0) {
+				navBar.className = classBar[0];
+			}
+		});
+
+		var itemListLocation = new ItemList(document.querySelector('a.location'), DATA.location);
+		var itemListCategory = new ItemList(document.querySelector('a.category'), DATA.category);
+
+		navBar.querySelector('form').addEventListener('submit', function(e) {
+			var data = new FormData;
+
+			data.append('keyword', this.keyword.value);
+			data.append('category_id', itemListCategory.result.id || 0);
+			
+
+			Request('ajax/search/', { method: 'POST', payload: data, responseType: 'JSON' }).then(function(response) {
+				if (response.status !== true) {
+					return;
+				}
+				window.location.href = response.redirect;
+			});
+		});
+
+		document.querySelector('#header .button.menu').addEventListener('click', function(e) {
+			if (e.target.nodeName === 'I' || e.target.nodeName === 'A') {
+				document.getElementById('side_bar').classList.toggle('active');
+			}
+		});
+
+		document.querySelector('#header .button.search').addEventListener('click', function(e) {
+			if (e.target.nodeName === 'I' || e.target.nodeName === 'A') {
+				this.classList.toggle('active'); this.querySelector('input').focus();
+			}
+		});
+
+		var sideBar = document.querySelector('#side_bar ul');
+
+		navBar.querySelectorAll('#list_category > li').forEach(function(element, i) {
+			sideBar.appendChild(element.cloneNode(true));
+		});
+		
+		var keyLogger = null, suggests = navBar.querySelector('form .suggests');
+		
+		navBar.querySelector('form input').addEventListener('input', function(e) {
+			if (keyLogger !== null || this.value == '') {
+				clearTimeout(keyLogger);
+				suggests.innerHTML = '';
+			}
+			var that = this;
+			keyLogger = setTimeout(function() {
+				suggests.innerHTML = '';
+				Request('ajax/suggests/', { method: 'POST', payload: 'keyword=' + that.value, responseType: 'JSON' }).then(function(response) {
+					if (response.status !== true || response.suggests.length < 1) {
+						return;
+					}
+					for (var i = 0, len = response.suggests.length; i < len; i++) {
+						suggests.innerHTML += '<a href="' + response.suggests[i]['link'] + '">' + response.suggests[i]['keyword'] + '</a>';
+					}
+				});
+			}, 600);
+		});
+	</script>
+	
+
+
+	<script type="application/ld+json">
+		{
+			"@context": "http://schema.org/",
+			"@type": "Product",
+			"name": "Căn Hộ Ph&uacute; Đ&ocirc;ng Premier, 66m2, 1,3 Tỷ, Nội Thất TEKA",
+			"image": "/uploads/can-ho-quan-thu-duc-15236724517814496-400.jpg",
+			"description": "Khu căn hộ 35 tầng với 6 tầng thương mại dịch vụ. Hồ bơi tầng 6 Thiết kế th&ocirc;ng minh 100% căn hộ c&oacute; vị tr&iacute; g&oacute;c tho&aacute;ng.",
+			"offers": {
+				"@type": "Offer",
+				"priceCurrency": "VND",
+				"price": "1300000000",
+				"itemCondition": "http://schema.org/UsedCondition",
+				"availability": "http://schema.org/InStock",
+				"seller": {
+					"@type": "Organization",
+					"name": "0938955090"
+				}
+			}
+		}
+	</script>
+	<style type="text/css">
+	.cg-dropdown-content{display:block;z-index:1}
+	.cg-dropdown-content{cursor:auto;color:#000;background-color:#fff;display:none;position:absolute;min-width:160px;margin:0;padding:0}
+
+	.user-show{display:block!important}
+	.cg-transparent:hover{background-color:transparent!important}
+	.cg-display-topright{position:absolute;right:0;top:0}
+	.cg-button:hover{color:#000!important;background-color:#ccc!important}
+	</style>
+
+	<div id='body'>
+
+		
+
+	
+		<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+			<div class="pswp__bg"></div>
+			<div class="pswp__scroll-wrap">
+				<div class="pswp__container">
+					<div class="pswp__item"></div>
+					<div class="pswp__item"></div>
+					<div class="pswp__item"></div>
+				</div>
+				<div class="pswp__ui pswp__ui--hidden">
+					<div class="pswp__top-bar">
+						<div class="pswp__counter"></div>
+						<button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+						<button class="pswp__button pswp__button--share" title="Share"></button>
+						<button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+						<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+						<div class="pswp__preloader">
+							<div class="pswp__preloader__icn">
+							  <div class="pswp__preloader__cut">
+								<div class="pswp__preloader__donut"></div>
+							  </div>
+							</div>
+						</div>
+					</div>
+					<div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+						<div class="pswp__share-tooltip"></div> 
+					</div>
+					<button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+					</button>
+					<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+					</button>
+					<div class="pswp__caption">
+						<div class="pswp__caption__center"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<link rel="stylesheet" href="views/user/js/photoswipe/photoswipe.css"> 
+		<link rel="stylesheet" href="views/user/js/photoswipe/default-skin/default-skin.css"> 
+
+		<script src="views/user/js/photoswipe/photoswipe.min.js"></script> 
+		<script src="views/user/js/photoswipe/photoswipe-ui-default.min.js"></script>
+
+		<div class='wrapper'>
+			<div class='big_frame'>
+				<div class='content column product' style="border-top: 3px solid #ffcd38;">
+					<div class="col">
+						<div class="slider">
+							<div class="container">
+														<img class="slide active" data-id="0" src="uploads/can-ho-quan-thu-duc-15236724517814496.jpg" alt="Căn Hộ Phú Đông Premier, 66m2, 1,3 Tỷ, Nội Thất TEKA">
+														<img class="slide " data-id="1" src="uploads/can-ho-quan-thu-duc-15236724517640631.jpg" alt="Căn Hộ Phú Đông Premier, 66m2, 1,3 Tỷ, Nội Thất TEKA">
+														<img class="slide " data-id="2" src="uploads/can-ho-quan-thu-duc-15236724517399758.jpg" alt="Căn Hộ Phú Đông Premier, 66m2, 1,3 Tỷ, Nội Thất TEKA">
+														<img class="slide " data-id="3" src="uploads/can-ho-quan-thu-duc-15236724517835640.jpg" alt="Căn Hộ Phú Đông Premier, 66m2, 1,3 Tỷ, Nội Thất TEKA">
+														<img class="slide " data-id="4" src="uploads/can-ho-quan-thu-duc-15236724517620354.jpg" alt="Căn Hộ Phú Đông Premier, 66m2, 1,3 Tỷ, Nội Thất TEKA">
+														<img class="slide " data-id="5" src="uploads/can-ho-quan-thu-duc-15236724527542794.jpg" alt="Căn Hộ Phú Đông Premier, 66m2, 1,3 Tỷ, Nội Thất TEKA">
+																			</div>
+							<div class="pagination clearfix">
+								<div class="next"></div>
+								<div class="prev"></div>
+							</div>
+						</div>
+						<style>
+							.avatar{
+
+									border-radius: 100%;
+								    max-width: 3.75rem;
+								    max-height: 3.75rem;
+								    margin: 0 auto;
+								    padding-left: 20px; 
+							}
+							#user_avartar all and (max-width: 442.02px){
+								z-index:5;							
+								border: 1px solid #ccc;
+								padding: 10px;
+								background: #f9f9f9;
+							}
+						</style>
+
+						<div>
+							<div style="padding: 10px;font-size: 18px;font-weight: 600;color: #4a4a4a;">Liên hệ</div>
+							<div id="user_avatar"  >
+						  		<a href="" >
+						  			<img class="avatar" src="http://mustangnews.net/wp-content/uploads/2017/04/boss-bb.jpg" srcset="http://mustangnews.net/wp-content/uploads/2017/04/boss-bb.jpg 8x, http://mustangnews.net/wp-content/uploads/2017/04/boss-bb.jpg 8x"></a>
+							    <a href="https://www.facebook.com/chuongtran1910" style="  padding: 50px;font-size: 18px;font-weight: 600;color: #4a4a4a;">Tran Minh Chuong</a>
+							    <div class="container" style="border-bottom: 1px solid #ffffff;">
+							    <ul class="list">
+									<li>Địa chỉ: <span style="font-style:oblique;">137 Lê Quang Định, Phường 14, Quận Bình Thạnh</span></li>
+									<li>Số điện thoại: <span style="line-height:10px;font-size:18px;color:#e63701;font-weight:700;">0938955090</span></li>
+									<li>Email: <span style="font-style:oblique;">chuongtran6@vanlanguni.vn</span></li>
+								</ul>
+								</div>
+								<!-- <script src='/views/user/css/fromcontactseller' type='text/javascript'></script> -->
+								
+								<style>
+								body {font-family: Arial, Helvetica, sans-serif;}
+
+								input[type=text], select, textarea {
+								    width: 100%;
+								    padding: 12px;
+								    border: 1px solid #ccc;
+								    border-radius: 4px;
+								    box-sizing: border-box;
+								    margin-top: 6px;
+								    margin-bottom: 16px;
+								    resize: vertical;
+								}
+
+								input[type=submit] {
+								    background-color: #fdcd37;
+								    color: white;
+								    padding: 12px 20px;
+								    border: none;
+								    border-radius: 4px;
+								    cursor: pointer;
+								}
+
+								input[type=submit]:hover {
+								    background-color: #45a049;
+								}
+
+								#containerr {
+								    border-radius: 5px;
+								    background-color: #f9f9f9;
+								    padding: 20px;
+								}
+
+								</style>
+								<div id="containerr">
+									  <form action="/action_page.php">
+									    <label for="fname">Họ & Tên:</label>
+									    <input type="text" id="Name" name="Name" placeholder="Your name..">
+
+									    <label for="lname">Email:</label>
+									    <input type="text" id="Email" name="email" placeholder="vanlangchotot@vanlanguni.vn..">
+
+									    <label for="subject">Nội dung:</label>
+									    <textarea id="subject" name="subject" placeholder="Write something.." style="height:100px"></textarea>
+
+									    <input type="submit" value="Submit">
+									  </form>
+								</div>
+								
+							</div>
+							<!-- <div class="user_avatar">
+								<div class="user-show">
+									<div class="user-info-row">
+										<div class="user_avatar">
+											<a href="/u/maiptn226" class="avatar"><img src="https://images.viblo.asia/avatar/9f4d0699-ffec-4104-b833-862657ee0c74.jpg" srcset="https://images.viblo.asia/avatar/9f4d0699-ffec-4104-b833-862657ee0c74.jpg 1x, https://images.viblo.asia/avatar-retina/9f4d0699-ffec-4104-b833-862657ee0c74.jpg 2x"></a>
+											<div class="user-name">
+												<a href="/u/maiptn226" class="">Pham Thi Ngoc Mai</a>
+												<span class="d-block">@maiptn226</span>
+											</div>
+											
+										</div>
+									</div>
+									
+								</div>
+							</div> -->
+
+						</div>
+						
+						
+					</div>
+					<div class="col">
+						<div class="details clearfix">
+							<div>
+								<h1 class='text' style="float: none;font-size: 18px;margin-top: -5px;">
+									<a href='/quan-thu-duc-tp-hcm/can-ho/can-ho-phu-dong-premier-66m2-1-3-ty-noi-that-teka-hdhhc.html' title='Căn Hộ Ph&uacute; Đ&ocirc;ng Premier, 66m2, 1,3 Tỷ, Nội Thất TEKA'>Căn Hộ Ph&uacute; Đ&ocirc;ng Premier, 66m2, 1,3 Tỷ, Nội Thất TEKA</a>
+								</h1>
+							</div>
+							<div class="price">
+								1,300,000,000<sup>đ</sup>							</div>
+							<div style="float: left;">
+								<span>
+									Đăng ngày: <i style="color: #e25604">15/04/2018</i> / Mã tin: <i style="color: #e25604">....</i>
+									/ Tại : <i><a style="color: #e25604" href="/quan-thu-duc-tp-hcm/">
+									 <i class="fa fa-map-marker"></i> ....								</a></i>
+								</span>
+								
+							</div>
+						</div>
+
+						<div id="content" class="container"><p>PHÚ ĐÔNG PREMIER là sản phẩm của Phú Đông Group.<br />
+															Đã hoàn thành các dự án chất lượng và đình đám thị trường:<br />
+															- HIM LAM CHỢ LỚN Quận 6<br />
+															- HIM LAM RIVERSIDE Quận 7<br />
+															- HIM LAM PHÚ ĐÔNG - Phạm Văn Đồng<br />
+															Và sản phẩm chuẩn bị mở bán PHÚ ĐÔNG PREMIER.<br />
+															Khu cùm bao khép kín, an ninh 24/24 và cực kỳ an toàn với trẻ nhỏ, vui chơi.<br />
+															Khu căn hộ 35 tầng với 6 tầng thương mại dịch vụ.<br />
+															Hồ bơi tầng 6<br />
+															Thiết kế thông minh 100% căn hộ có vị trí góc thoáng.<br />
+															Tất cả các phòng ngủ điều có cửa sổ.<br />
+															Ban công và sân phơi riêng biệt.<br />
+															Nội thất bàn giao hoàn hảo như những dự án trước đây, cực kỳ chất lượng qua sự đánh giá của khách hàng.<br />
+															Diện tích 62 - 66 -69 - 70m2 (2 Phòng Ngủ, 2WC)<br />
+															Và với 1 mức giá khó có thể tốt hơn. 1,3 Tỷ/Căn<br />
+															Thanh toán trả chậm 4 năm không lãi suất.<br />
+															Ngân hàng ưu đãi cho vay 70%.<br />
+															Hãy nâng niu giá trị và cơ hội sở hữu sản phẩm chất lượng nhất.<br />
+															Đi xem nhà thực tế:<br />
+															Mail:</p></div>
+
+						<div class="container social clearfix">
+							<a href='https://facebook.com' title='Chia sẻ lên Facebook' target='_blank' class='facebook'>Facebook</a>
+							<a href='https://plus.google.com' title='Chia sẻ lên Google Plus' target='_blank' class='google'>Google Plus</a>
+							<a href='https://twitter.com' title='Chia sẻ lên Twitter' target='_blank' class='twitter'>Twitter</a>
+													<a href='javascript:abuseReport(this);' title='Báo cáo tin đăng' rel="nofollow" class='report'>Báo xấu</a>
+												</div>
+						<div class="container message warning user-note">
+							<h6 ><strong style="font-size: 14px;color: #6f6f6f;">MUA HÀNG AN TOÀN</strong></h6>
+							<ul class="list">
+								<li>KHÔNG trả tiền trước khi nhận hàng.</li>
+								<li>GỌI ĐIỆN xác minh tìm hiểu hàng cần mua.</li>
+								<li>Kiểm tra hàng cẩn thận, đặc biệt với hàng đắt tiền.</li>
+								<li>Hẹn gặp ở nơi công cộng.</li>
+								<li>Nếu bạn mua hàng hiệu, hãy gặp mặt tại cửa hàng để nhờ xác minh, tránh mua phải hàng giả.</li>
+							</ul>
+						</div>
+
+
+						<div class="container step hidden">
+							<!-- <div data-step-id="0">
+								<a class="reason">Lừa đảo</a>
+								<a class="reason">Trùng lặp</a>
+								<a class="reason">Hàng đã bán</a>
+								<a class="reason">Không liên lạc được</a>
+								<a class="reason">Thông tin không đúng thực tế</a>
+							</div> -->
+							<div data-step-id="1">
+								<div></div>
+								<form name="abuse" class="form abuse">
+									<input type="hidden" name="id" value="118990">
+									<input type="hidden" name="type" value="post">
+									<div class="column">
+										<div class="col">
+											<div class="caption">Số điện thoại</div>
+											<div class="input">
+												<input type="text" name="phone" placeholder="">
+											</div>
+										</div>
+										<div class="col">
+											<div class="caption">Thư điện tử</div>
+											<div class="input">
+												<input type="text" name="email" placeholder="">
+											</div>
+										</div>
+									</div>
+									<div class="column">
+										<div class="col">
+											<div class="caption">Mô tả thêm cho báo cáo</div>
+											<div class="textarea">
+												<textarea name="description"></textarea>
+											</div>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+
+					</div>
+				</div>
+
+			</div>
+		</div>
+
+			<div class='wrapper'>
+			<div class='big_frame'>
+				<div class='title clearfix'>
+					<div class='icon'><i class='fa fa-flag'></i></div>
+					<div class='text'><a>Tin đăng cùng danh mục</a></div>
+				</div>
+				<div class='list_product clearfix'>
+					<div class='list clearfix'>
+											<div class='product' data-id='1'>
+							<a href='/quan-thu-duc-tp-hcm/can-ho/can-ho-ven-song-mat-tien-duong-pham-van-dong-dmbm.html' title='Căn Hộ Ven S&ocirc;ng Mặt Tiền Đường Phạm Văn Đồng' class='name'>Căn Hộ Ven S&ocirc;ng Mặt Tiền Đường Phạm Văn Đồng</a>
+							<div class="product_m">
+							<a href='/quan-thu-duc-tp-hcm/can-ho/can-ho-ven-song-mat-tien-duong-pham-van-dong-dmbm.html' class='thumbnail' style='background-image:url(uploads/can-ho-quan-thu-duc-14943800487850829-400.jpg)'>
+								<img src='uploads/can-ho-quan-thu-duc-14943800487850829-400.jpg' alt='Căn Hộ Ven S&ocirc;ng Mặt Tiền Đường Phạm Văn Đồng' />
+															<div class='overlay'>
+									<span><i class='fa fa-eye'></i> Xem ngay</span>
+								</div>
+							</a>
+							</div>
+							<a title='Giá bán' class='price'>
+								5,000<sup>đ</sup>	
+							</a>
+							<div class='author'>Đăng bởi <a href='/user/26293.html' title='Donald Trung'>Donald Trung'</a></div>
+							<div class='category'>
+								<a href='/quan-thu-duc-tp-hcm/' title='Quận Thủ Đức' class='location'>Quận Thủ Đức</a>
+								<a href='/quan-thu-duc-tp-hcm/can-ho/' title='Căn hộ'>Căn hộ</a>
+							</div>
+						</div>
+						<div class='product' data-id='1'>
+							<a href='/quan-thu-duc-tp-hcm/can-ho/can-ho-ven-song-mat-tien-duong-pham-van-dong-dmbm.html' title='Căn Hộ Ven S&ocirc;ng Mặt Tiền Đường Phạm Văn Đồng' class='name'>Căn Hộ Ven S&ocirc;ng Mặt Tiền Đường Phạm Văn Đồng</a>
+							<div class="product_m">
+							<a href='/quan-thu-duc-tp-hcm/can-ho/can-ho-ven-song-mat-tien-duong-pham-van-dong-dmbm.html' class='thumbnail' style='background-image:url(uploads/can-ho-quan-thu-duc-14943800487850829-400.jpg)'>
+								<img src='uploads/can-ho-quan-thu-duc-14943800487850829-400.jpg' alt='Căn Hộ Ven S&ocirc;ng Mặt Tiền Đường Phạm Văn Đồng' />
+															<div class='overlay'>
+									<span><i class='fa fa-eye'></i> Xem ngay</span>
+								</div>
+							</a>
+							</div>
+							<a title='Giá bán' class='price'>
+								5,000<sup>đ</sup>	
+							</a>
+							<div class='author'>Đăng bởi <a href='/user/26293.html' title='Donald Trung'>Donald Trung'</a></div>
+							<div class='category'>
+								<a href='/quan-thu-duc-tp-hcm/' title='Quận Thủ Đức' class='location'>Quận Thủ Đức</a>
+								<a href='/quan-thu-duc-tp-hcm/can-ho/' title='Căn hộ'>Căn hộ</a>
+							</div>
+						</div>
+						<div class='product' data-id='1'>
+							<a href='/quan-thu-duc-tp-hcm/can-ho/can-ho-ven-song-mat-tien-duong-pham-van-dong-dmbm.html' title='Căn Hộ Ven S&ocirc;ng Mặt Tiền Đường Phạm Văn Đồng' class='name'>Căn Hộ Ven S&ocirc;ng Mặt Tiền Đường Phạm Văn Đồng</a>
+							<div class="product_m">
+							<a href='/quan-thu-duc-tp-hcm/can-ho/can-ho-ven-song-mat-tien-duong-pham-van-dong-dmbm.html' class='thumbnail' style='background-image:url(uploads/can-ho-quan-thu-duc-14943800487850829-400.jpg)'>
+								<img src='uploads/can-ho-quan-thu-duc-14943800487850829-400.jpg' alt='Căn Hộ Ven S&ocirc;ng Mặt Tiền Đường Phạm Văn Đồng' />
+															<div class='overlay'>
+									<span><i class='fa fa-eye'></i> Xem ngay</span>
+								</div>
+							</a>
+							</div>
+							<a title='Giá bán' class='price'>
+								5,000<sup>đ</sup>	
+							</a>
+							<div class='author'>Đăng bởi <a href='/user/26293.html' title='Donald Trung'>Donald Trung'</a></div>
+							<div class='category'>
+								<a href='/quan-thu-duc-tp-hcm/' title='Quận Thủ Đức' class='location'>Quận Thủ Đức</a>
+								<a href='/quan-thu-duc-tp-hcm/can-ho/' title='Căn hộ'>Căn hộ</a>
+							</div>
+						</div>
+						<div class='product' data-id='1'>
+							<a href='/quan-thu-duc-tp-hcm/can-ho/can-ho-ven-song-mat-tien-duong-pham-van-dong-dmbm.html' title='Căn Hộ Ven S&ocirc;ng Mặt Tiền Đường Phạm Văn Đồng' class='name'>Căn Hộ Ven S&ocirc;ng Mặt Tiền Đường Phạm Văn Đồng</a>
+							<div class="product_m">
+							<a href='/quan-thu-duc-tp-hcm/can-ho/can-ho-ven-song-mat-tien-duong-pham-van-dong-dmbm.html' class='thumbnail' style='background-image:url(uploads/can-ho-quan-thu-duc-14943800487850829-400.jpg)'>
+								<img src='uploads/can-ho-quan-thu-duc-14943800487850829-400.jpg' alt='Căn Hộ Ven S&ocirc;ng Mặt Tiền Đường Phạm Văn Đồng' />
+															<div class='overlay'>
+									<span><i class='fa fa-eye'></i> Xem ngay</span>
+								</div>
+							</a>
+							</div>
+							<a title='Giá bán' class='price'>
+								5,000<sup>đ</sup>	
+							</a>
+							<div class='author'>Đăng bởi <a href='/user/26293.html' title='Donald Trung'>Donald Trung'</a></div>
+							<div class='category'>
+								<a href='/quan-thu-duc-tp-hcm/' title='Quận Thủ Đức' class='location'>Quận Thủ Đức</a>
+								<a href='/quan-thu-duc-tp-hcm/can-ho/' title='Căn hộ'>Căn hộ</a>
+							</div>
+						</div>
+						<div class='product' data-id='1'>
+							<a href='/quan-thu-duc-tp-hcm/can-ho/can-ho-ven-song-mat-tien-duong-pham-van-dong-dmbm.html' title='Căn Hộ Ven S&ocirc;ng Mặt Tiền Đường Phạm Văn Đồng' class='name'>Căn Hộ Ven S&ocirc;ng Mặt Tiền Đường Phạm Văn Đồng</a>
+							<div class="product_m">
+							<a href='/quan-thu-duc-tp-hcm/can-ho/can-ho-ven-song-mat-tien-duong-pham-van-dong-dmbm.html' class='thumbnail' style='background-image:url(uploads/can-ho-quan-thu-duc-14943800487850829-400.jpg)'>
+								<img src='uploads/can-ho-quan-thu-duc-14943800487850829-400.jpg' alt='Căn Hộ Ven S&ocirc;ng Mặt Tiền Đường Phạm Văn Đồng' />
+															<div class='overlay'>
+									<span><i class='fa fa-eye'></i> Xem ngay</span>
+								</div>
+							</a>
+							</div>
+							<a title='Giá bán' class='price'>
+								5,000<sup>đ</sup>	
+							</a>
+							<div class='author'>Đăng bởi <a href='/user/26293.html' title='Donald Trung'>Donald Trung'</a></div>
+							<div class='category'>
+								<a href='/quan-thu-duc-tp-hcm/' title='Quận Thủ Đức' class='location'>Quận Thủ Đức</a>
+								<a href='/quan-thu-duc-tp-hcm/can-ho/' title='Căn hộ'>Căn hộ</a>
+							</div>
+						</div>
+											
+											
+										</div>
+				</div>
+			</div>
+					<script type="application/ld+json">
+				{
+					"@context": "http://schema.org",
+					"@type": "ItemList",
+					"itemListElement": [{"@type":"Product","image":"https:\/\/chugiong.com\/uploads\/can-ho-quan-thu-duc-14943800487850829-400.jpg","name":"C\u0103n H\u1ed9 Ven S&ocirc;ng M\u1eb7t Ti\u1ec1n \u0110\u01b0\u1eddng Ph\u1ea1m V\u0103n \u0110\u1ed3ng","url":"https:\/\/chugiong.com\/quan-thu-duc-tp-hcm\/can-ho\/can-ho-ven-song-mat-tien-duong-pham-van-dong-dmbm.html","offers":{"@type":"Offer","availability":"http:\/\/schema.org\/InStock","price":5000,"priceCurrency":"VND"}},{"@type":"Product","image":"https:\/\/chugiong.com\/uploads\/can-ho-quan-thu-duc-15112483677146247-400.jpg","name":"299TR S\u1ede H\u1eeeU NGAY C\u0102N H\u1ed8 2PN TRUNG T&Acirc;M TH\u1ee6 \u0110\u1ee8C","url":"https:\/\/chugiong.com\/quan-thu-duc-tp-hcm\/can-ho\/299tr-so-huu-ngay-can-ho-2pn-trung-tam-thu-duc-hpecm.html","offers":{"@type":"Offer","availability":"http:\/\/schema.org\/InStock","price":970000000,"priceCurrency":"VND"}},{"@type":"Product","image":"https:\/\/chugiong.com\/uploads\/can-ho-quan-thu-duc-15113428457334720-400.jpg","name":"C\u0103n h\u1ed9 tuy\u1ec7t v\u1eddi t\u1ea1i 4S Riverside Linh \u0110&ocirc;ng","url":"https:\/\/chugiong.com\/quan-thu-duc-tp-hcm\/can-ho\/can-ho-tuyet-voi-tai-4s-riverside-linh-dong-hpfoa.html","offers":{"@type":"Offer","availability":"http:\/\/schema.org\/InStock","price":1900000000,"priceCurrency":"VND"}},{"@type":"Product","image":"https:\/\/chugiong.com\/uploads\/can-ho-quan-thu-duc-15115974747992484-400.jpg","name":"C\u0103n h\u1ed9 \u0111\u1eb3ng c\u1ea5p b\u1eadc nh\u1ea5t khu \u0111&ocirc;ng Th\u1ee7 \u0110\u1ee9c","url":"https:\/\/chugiong.com\/quan-thu-duc-tp-hcm\/can-ho\/-can-ho-dang-cap-bac-nhat-khu-dong-thu-duc-hageb.html","offers":{"@type":"Offer","availability":"http:\/\/schema.org\/InStock","price":1900000000,"priceCurrency":"VND"}},{"@type":"Product","image":"https:\/\/chugiong.com\/uploads\/can-ho-quan-thu-duc-15117742017630306-400.jpg","name":"B&aacute;n g\u1ea5p c\u0103n h\u1ed9 4S Riverside Linh \u0110&ocirc;ng","url":"https:\/\/chugiong.com\/quan-thu-duc-tp-hcm\/can-ho\/ban-gap-can-ho-4s-riverside-linh-dong-hahoa.html","offers":{"@type":"Offer","availability":"http:\/\/schema.org\/InStock","price":1900000000,"priceCurrency":"VND"}},{"@type":"Product","image":"https:\/\/chugiong.com\/uploads\/can-ho-quan-thu-duc-15118345797100340-400.jpg","name":"S\u1edf h\u1eefu c\u0103n 2 ph&ograve;ng ng\u1ee7 ngay trung t&acirc;m Th\u1ee7 \u0110\u1ee9c","url":"https:\/\/chugiong.com\/quan-thu-duc-tp-hcm\/can-ho\/so-huu-can-2-phong-ngu-ngay-trung-tam-thu-duc--hahbk.html","offers":{"@type":"Offer","availability":"http:\/\/schema.org\/InStock","price":0,"priceCurrency":"VND"}},{"@type":"Product","image":"https:\/\/chugiong.com\/uploads\/can-ho-quan-thu-duc-15118395607448752-400.jpg","name":"C\u0103n h\u1ed9 4S Linh \u0110&ocirc;ng, b&aacute;n block cu\u1ed1i, b&agrave;n giao ngay","url":"https:\/\/chugiong.com\/quan-thu-duc-tp-hcm\/can-ho\/can-ho-4s-linh-dong-ban-block-cuoi-ban-giao-ngay-hahdg.html","offers":{"@type":"Offer","availability":"http:\/\/schema.org\/InStock","price":0,"priceCurrency":"VND"}},{"@type":"Product","image":"https:\/\/chugiong.com\/uploads\/can-ho-quan-thu-duc-15119392407002122-400.jpg","name":"\u0102n t\u1ebft c&ugrave;ng v\u1edbi 4S Riverside Linh \u0110&ocirc;ng","url":"https:\/\/chugiong.com\/quan-thu-duc-tp-hcm\/can-ho\/an-tet-cung-voi-4s-riverside-linh-dong-haioc.html","offers":{"@type":"Offer","availability":"http:\/\/schema.org\/InStock","price":1900000000,"priceCurrency":"VND"}},{"@type":"Product","image":"https:\/\/chugiong.com\/uploads\/can-ho-quan-thu-duc-15119599517026773-400.jpg","name":"C\u0102N H\u1ed8 CAO C\u1ea4P C&Oacute; BAN C&Ocirc;NG D\u01af\u1edaI CH\u1ec8 969TR\/C\u0102N","url":"https:\/\/chugiong.com\/quan-thu-duc-tp-hcm\/can-ho\/can-ho-cao-cap-co-ban-cong-duoi-chi-969tr-can--haicn.html","offers":{"@type":"Offer","availability":"http:\/\/schema.org\/InStock","price":0,"priceCurrency":"VND"}},{"@type":"Product","image":"https:\/\/chugiong.com\/uploads\/can-ho-quan-thu-duc-15120095777369982-400.jpg","name":"T\u1ed5ng quan d\u1ef1 &aacute;n 4S Riverside Linh \u0110&ocirc;ng","url":"https:\/\/chugiong.com\/quan-thu-duc-tp-hcm\/can-ho\/tong-quan-du-an-4s-riverside-linh-dong-haiek.html","offers":{"@type":"Offer","availability":"http:\/\/schema.org\/InStock","price":1900000000,"priceCurrency":"VND"}}]				}
+			</script>
+				</div>
+		<script type="text/javascript">
+			Reaction(document.querySelector('.list_product .list'), Reaction.Request.POST);
+		</script>
+	
+		<script type="text/javascript">document.forms.comment.onsubmit = CommentRequest;</script>
+		<script type="text/javascript">
+			var commentForm = document.forms['comment'],
+				container = document.querySelector('.list_comment');
+
+			commentForm.querySelector('.buttons .label').addEventListener('click', function(e) {
+				commentForm.querySelector('.buttons .label').classList.add('hidden');
+				commentForm.querySelector('.buttons .label input').value = 0;
+			});
+
+			container.addEventListener('click', function(e) {
+				var element = e.path.find(function(elem) {
+					return elem.nodeName === 'A' && elem.classList.contains('reply') && elem.dataset.id;
+				});
+				if (element instanceof HTMLElement !== false) {
+					commentForm.querySelector('.buttons .label input').value = element.dataset.id;
+					commentForm.querySelector('.buttons .label').classList.remove('hidden');
+					commentForm.scrollIntoView(false);
+					commentForm['content'].style.visibility = 'visible'; 
+					commentForm['content'].style.display = 'block';  
+					commentForm['content'].tabIndex = '-1';  
+					commentForm['content'].focus();
+				}
+			});
+
+			var ajaxRequestURL = 'ajax/comment/loadmore/post/', postId = '118990';
+
+			container.parentNode.addEventListener('click', function(e) {
+				if (e.target.nodeName !== 'BUTTON' || typeof e.target.dataset.startAt == 'undefined') {
+					return;
+				}
+				e.target.innerHTML = '<i class="fa fa-spin fa-spinner"></i> ' + e.target.textContent;
+				var data = new FormData;
+				data.append('start', e.target.dataset.startAt);
+				data.append('id', postId);
+				if (typeof e.target.dataset.commentId !== 'undefined') {
+					data.append('comment_id', e.target.dataset.commentId);
+				}
+				Request(ajaxRequestURL, { method: 'POST', payload: data }).then(function(response) {
+					try {
+						var parse = JSON.parse(response);
+					}
+					catch (error) {
+						var commentHTML = document.createElement('div');
+							commentHTML.innerHTML = response;
+						if (commentHTML.querySelector('.comment')) {
+							if (e.target.parentNode.previousElementSibling.classList.contains('list_comment')) {
+								e.target.parentNode.previousElementSibling.appendChild(commentHTML);
+							}
+							else {
+								e.target.parentNode.parentNode.insertBefore(commentHTML, e.target.parentNode);
+							}
+							e.target.dataset.startAt = 1 + Number(parseInt(e.target.dataset.startAt));
+						}
+						if (commentHTML.querySelectorAll('.comment').length < 12) {
+							e.target.parentNode.parentNode.removeChild(e.target.parentNode);
+						}
+					}
+					e.target.innerHTML = e.target.textContent;
+				});
+			});
+
+			Reaction(document.querySelector('.details .stats'), Reaction.Request.POST);
+			Reaction(container, Reaction.Request.COMMENT);
+		</script>
+
+		<script type="text/javascript">
+			var slider = document.querySelector('.slider'), pswpElement = document.querySelector('.pswp');
+
+			var items = [].slice.call(slider.querySelectorAll('.container img.slide')).map(function(elem, i) {
+				return {
+					title: elem.alt, src: elem.src, w: 800, h: 600 
+				};
+			});
+
+			var moveImage = function(pos) {
+				var slide = slider.querySelector('img.slide.active');
+				if (slide !== null) {
+					slide.classList.remove('active');
+					var directional = pos !== -1 ? 'nextElementSibling' : 'previousElementSibling';
+					if (slide[directional] !== null) {
+						slide[directional].classList.add('active');
+					}
+					else {
+						slider.querySelector('img.slide' + (pos !== -1 ? ':first-child' : ':last-child')).classList.add('active');
+					}
+					slider.focus();
+				}
+			};
+
+			slider.addEventListener('click', function(e) {
+				if (['next', 'prev'].indexOf(e.target.className) !== -1) {
+					return moveImage(e.target.className.indexOf('prev'));
+				}
+				if (e.target.nodeName === 'DIV' && e.target.className.indexOf('pagination') !== -1) {
+					return this.querySelector('img.slide.active').click();
+				}
+				if (typeof PhotoSwipe !== 'function' || typeof PhotoSwipeUI_Default !== 'function') {
+					return false;
+				}
+				var options = {
+					index: Number(parseInt(e.target.dataset.id)), escKey: false, timeToIdle: 4000
+				};
+				return new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, options).init();
+			});
+
+			var phoneCall = function(e) {
+				var contactList = document.createElement('table');
+
+				[{"name":"Tr\u1ea7n T\u00e2n M\u00f9i","phone":"0938955090"}].forEach(function(currentValue, i) {
+					var contact = document.createElement('tr');
+					contact.innerHTML += '<td><i class="fa fa-id-card-o"></i> ' + currentValue['name'].toHtmlEntities() + '</td>';
+					contact.innerHTML += '<td><i class="fa fa-mobile-phone"></i> ' + currentValue['phone'].toHtmlEntities() + '</td>';
+					contact.innerHTML += '<td><a href="tel:' + currentValue['phone'].toHtmlEntities() + '"><button><i class="fa fa-phone"></i></button></td>';
+					contactList.appendChild(contact);
+				});
+
+				contactList.style.width = '100%';
+
+				var popup = new Popup({ header: 'Điện thoại liên hệ', content: contactList.outerHTML, buttons: [
+						{
+							text: 'Đóng lại', id: 'close', callback: function(ev) {
+								document.body.removeChild(this.popup);
+							}
+						}
+					]
+				});
+			};
+
+			document.querySelector('.phonecall').addEventListener('click', phoneCall);
+		</script>
+
+		<script type="text/javascript">
+			var abuseStep = document.querySelectorAll('.step > div'), abuseReport = function(elem) {
+				var confirm = function(e) {
+					if (typeof e.target.dataset.step === 'undefined') {
+						return this.popup.remove();
+					}
+					var abuse = this.popup.content.querySelector('form'), data = new FormData(abuse), popup = this.popup;
+					if (abuse) {
+						data.append('reason', e.target.dataset.step + '. ' + data.get('description'));
+					}
+					Request('ajax/report/', { method: 'POST', payload: data }).then(function(response) {
+						try {
+							var parse = JSON.parse(response);
+							if (parse.status) {
+								popup.content.style.textAlign = 'center';
+								popup.content.innerHTML = parse.message;
+								popup.ownerDocument.getElementById('button:confirm').remove();
+								return;
+							}
+							popup.content.firstElementChild.style.color = '#e74c3c';
+							popup.content.firstElementChild.style.padding = '10px';
+							popup.content.firstElementChild.style.textAlign = 'center';
+							popup.content.firstElementChild.style.borderBottom = '1px solid #dedede';
+							popup.content.firstElementChild.innerHTML = parse.message;
+						}
+						catch (error) {
+
+						}
+					});			
+				};
+				var popup = new Popup({ header: 'Tin đăng này có vấn đề gì?', content: abuseStep.item(0).innerHTML, buttons: [
+						{
+							text: 'Xác nhận', id: 'confirm', callback: confirm
+						},
+						{
+							text: 'Đóng lại', id: 'close', callback: function(ev) {
+								document.body.removeChild(this.popup);
+							}
+						}
+					]
+				});
+				popup.content.addEventListener('click', function(e) {
+					if (e.target.nodeName === 'A') {
+						this.removeEventListener('click', arguments.callee);
+						this.ownerDocument.getElementById('button:confirm').dataset.step = e.target.textContent;
+						this.innerHTML = abuseStep.item(1).innerHTML;
+					}
+				});
+			};
+		</script>
+		<script>
+		function openMenu() {
+		    var x = document.getElementById("user_avatar");
+		    if (x.className.indexOf("user-show") == -1) {
+		        x.className += " user-show";
+		    } else { 
+		        x.className = x.className.replace(" user-show", "");
+		    }
+		}
+		</script>
+
+	</div>
+
+		<div class="wrapper">
+			<div class="big_frame">
+								<script async src="/pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+								<!-- Chugiong - Chi tiết -->
+								<ins class="adsbygoogle"
+								     style="display:block"
+								     data-ad-client="ca-pub-3114855782333251"
+								     data-ad-slot="9809477734"
+								     data-ad-format="auto"></ins>
+								<script>
+								(adsbygoogle = window.adsbygoogle || []).push({});
+								</script>
+			</div>
+		</div>
+		
+
+	<!-- Google Tag Manager (noscript) -->
+	<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5TFF32P"
+	height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+	<!-- End Google Tag Manager (noscript) -->
+
+	<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+	ga('create', 'UA-84470609-1', 'auto');
+	ga('send', 'pageview');
+	</script>
+
+	<!-- Start Alexa Certify Javascript -->
+	<script type="text/javascript">
+	_atrk_opts = { atrk_acct:"/21co1IWNa10em", domain:"chugiong.com",dynamic: true};
+	(function() { var as = document.createElement('script'); as.type = 'text/javascript'; as.async = true; as.src = "https://d31qbv1cthcecs.cloudfront.net/atrk.js"; var s = document.getElementsByTagName('script')[0];s.parentNode.insertBefore(as, s); })();
+	</script>
+	<noscript><img src="https://d5nxst8fruw4z.cloudfront.net/atrk.gif?account=/21co1IWNa10em" style="display:none" height="1" width="1" alt="" /></noscript>
+	<!-- End Alexa Certify Javascript -->
+
+	<script src="https://www.gstatic.com/firebasejs/3.6.4/firebase.js"></script>
+	<script type="text/javascript">
+		firebase.initializeApp({
+			apiKey: "AIzaSyBqrfl0PhVwb07gnYuEUqx8KxTxrwuzl1E",
+			authDomain: "chugiong-de367.firebaseapp.com",
+			databaseURL: "https://chugiong-de367.firebaseio.com",
+			storageBucket: "chugiong-de367.appspot.com",
+			messagingSenderId: "788365854129"
+		});
+	</script>
+	<script src='views/user/js/realtime.min.js' type='text/javascript'></script>
+	<script type='text/javascript'>
+		var realtime = Realtime.entry({
+			customToken: '',
+			uid: '',
+			displayName: 'Anonymous',
+			ttl: 6000,
+			message: true,
+			tracking: false,
+			notification: true
+		}).init();
+	</script>
+</body>
+</html>

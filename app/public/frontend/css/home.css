@@ -1,0 +1,190 @@
+.body{
+    background-color: white;
+}
+/*For Menu Style*/
+.navbar-default {
+    background-color: white;
+    border-color: transparent;
+    border-radius:0;
+    padding-top:30px;
+    padding-bottom: 20px;
+}
+.navbar-default .navbar-nav>.active>a, .navbar-default .navbar-nav>.active>a:hover, .navbar-default .navbar-nav>.active>a:focus {
+    color:  #ffcc30;
+    background-color:white;
+}
+.navbar-default .navbar-nav>li>a {
+    color: #000;
+    font-size:14px;
+    font-weight:600;
+    text-transform:uppercase;
+}
+.navbar-default .navbar-nav li a :hover{
+    color:  #ffcc30;
+}
+.navbar-default .collapse .login a{
+    color:  #ffcc30;
+    border: 1px solid  #ffcc30;
+    border-radius: 20px;
+    padding: 4px 30px;
+    font-size: 12px;
+    margin-top: 10px;
+    margin-left: 30px;
+    display:inline-block;
+    overflow:hidden;
+}
+.navbar-default .collapse .login:hover a{
+    background-color: #ffcc30;
+    color:#fff;
+}
+.navbar-default .navbar-nav>li>a:hover, .navbar-default .navbar-nav>li>a:focus {
+    color:  #ffcc30;
+    background-color: transparent;
+}
+.navbar-brand{
+    margin-top:-5px;    
+}
+.K{
+    padding-bottom: 30px;
+}
+/*For Footer Menu Section*/
+
+.footer-menu{
+    background:#ffcc30;
+    color:#000;
+    border-bottom:1px solid #cfcdcd;
+}
+.menu-item{
+    margin-bottom:20px;
+}
+.menu-item h5{
+    font-size:16px;
+    font-family: 'Arial';
+    font-weight:500;
+}
+.menu-item p{
+    font-size:12px;
+}
+.menu-item ul li{
+    font-size:13px;
+    text-transform:uppercase;
+    font-family: 'Arial';
+    margin-bottom:10px;
+}
+
+.menu-item .form-control {
+    position: relative;
+    z-index: 2;
+    float: left;
+    width: 65%;
+    margin-bottom: 0;
+
+}
+.menu-item input[type="text"]{
+    color:#ffcc30;
+}
+.menu-item input[type="submit"]{
+    display:inline-block;
+    width:35%;
+    background:#FF6600;
+    color:#fff;
+    border:0px;
+}
+.menu-item input[type="submit"]:hover{
+    background-color: #ffcc30;
+}
+
+/*For Footer Section*/
+.footer{
+    padding-top: 2%;
+    background-color: #ffcc30;
+    color:white;
+    padding-bottom: 2%;
+}
+.footer-wrapper{
+    padding:20px 0px;
+    display:block;
+}
+.footer-brand{
+    float:left;
+}
+.copyright{
+    text-align:right;
+}
+.copyright p{
+    font-size: 1.125rem;
+    margin-bottom: 1px;
+    padding: 20px 0px;
+}
+.copyright p i{
+    color:#ff0000;
+    }.copyright p a{
+        color:#32E10A;
+    }
+
+
+    /*scollup icon*/
+
+    .scrollup {
+       width: 30px;
+       height: 30px;
+       border-radius: 15px;
+       opacity: .3;
+       position: fixed;
+       bottom: 20px;
+       right: 25px;
+       color: #fff;
+       cursor: pointer;
+       background-color: #000;
+       z-index: 10;
+       transition: opacity .5s, background-color .5s;
+       -moz-transition: opacity .5s, background-color .5s;
+       -webkit-transition: opacity .5s, background-color .5s;
+   }
+   .scrollup:hover {
+       background: #ffcc30;
+       opacity: 1;
+   }
+   .scrollup i {
+       font-size: 13px;
+       position: absolute;
+       opacity: 1;
+       color: #fff;
+       left: 50%;
+       top: 50%;
+       margin-top: -7px;
+       margin-left: -6px;
+       text-decoration: none;
+
+   }
+/* For Social Wrapper */
+.social{
+    background:#ffcc30;
+    padding:10px 0;
+}
+.social-wrapper .social-icon a{
+    float:left;
+    font-size:150%;
+    color:#fff;
+}
+.social-wrapper .social-icon a:hover{
+    color: #ffcc30;
+}
+.social-wrapper .social-icon a i{
+    padding-right:10px;
+}
+.social-wrapper .social-contact{
+    float:right;
+    font-size:150%;
+}
+.social-wrapper .social-contact a{
+    color:#fff;
+    margin-right:20px;
+}
+.social-wrapper .social-contact a:hover{
+    color: #ffcc30;
+}
+.social-wrapper .social-contact a i{
+    padding-right:5px;
+}
+
