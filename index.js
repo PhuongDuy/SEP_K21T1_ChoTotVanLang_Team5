@@ -3,6 +3,9 @@ var express = require('express'),
     https = require('https'),
     path = require('path'),
     bodyParser = require('body-parser'),
+    nodemailer = require('nodemailer'),//company
+    hbs = require('express-handlebars'),
+    urlencodedParser = bodyParser.urlencoded({ extended: false }),
     User = require('./models/User'),
     About = require('./models/About'),
     ContactOfCompany = require('./models/ContactOfCompany'),
@@ -57,6 +60,9 @@ app.get('/viewlistproject',function(req,res){
 app.get('/index',function(req,res){
     res.render('index');
 });
+app.get('/mail',function(req,res){
+    res.render('mail');
+});
 
 // mongoose.connect("mongodb://DuyHo:hothanhphuongduy@ds135179.mlab.com:35179/sep_k21t1_team5",function(err, db){
 //     if (err) throw err;
@@ -69,6 +75,39 @@ app.get('/index',function(req,res){
 //     });
 //     db.close();
 // });
+
+//contact company
+app.post('/mail', urlencodedParser, function (req, res) {
+  
+    var yourname = req.body.yourname;
+    var youremail = req.body.youremail;
+    var numphone = req.body.numphone;
+    var message = req.body.message;
+    var transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+          user: 'ppcrentalteam04@gmail.com',
+          pass: 'K21t1team04'
+        }
+      });
+      
+      var mailOptions = {
+        from: '"Hỗ trợ chợ tốt Văn Lang"<ppcrentalteam04@gmail.com>',
+        to: 'team05.sep.2018@gmail.com',
+         //pass:sep.team05.2018
+        subject: 'Hỗ trợ khách hàng',
+        text: 'Họ và tên: '+yourname+' Địa chỉ email: '+youremail+' Số điện thoại: '+numphone+' Nội dung:'+message 
+      };
+      
+    transporter.sendMail(mailOptions, function (err, inffo) {
+        if (err) {
+            console.log(err);
+            res.send('Thất bại');
+        } else {
+            res.send('Bạn đã gửi liên hệ thành công ')
+        }
+    })
+})
 
 
 var port = process.env.port || 3000;
