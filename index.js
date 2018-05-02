@@ -63,6 +63,9 @@ app.get('/index',function(req,res){
 app.get('/mail',function(req,res){
     res.render('mail');
 });
+app.get('/post-product',function(req,res){
+    res.render('post-product');
+});
 
 // mongoose.connect("mongodb://DuyHo:hothanhphuongduy@ds135179.mlab.com:35179/sep_k21t1_team5",function(err, db){
 //     if (err) throw err;

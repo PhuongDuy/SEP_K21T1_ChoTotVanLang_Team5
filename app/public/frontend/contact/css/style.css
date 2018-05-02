@@ -1864,3 +1864,78 @@ xkeyframes
     text-transform: none;
     display: block;
 }
+.image-preview-input {
+    position: relative;
+  overflow: hidden;
+  margin: 0px;    
+    color: #333;
+    background-color: #fff;
+    border-color: #ccc;    
+  }
+  .image-preview-input input[type=file] {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 0;
+  padding: 0;
+  font-size: 20px;
+  cursor: pointer;
+  opacity: 0;
+  filter: alpha(opacity=0);
+  }
+  .image-preview-input-title {
+    margin-left:2px;
+  }
+  .container-content{
+    background-color: white;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 25px;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  .caption{
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+  .text-area{
+    border: 1px solid #dedede;
+    background: #fff;
+    margin-top: 5px;
+  }
+  .text-area textarea{
+    border: none;
+    font-size: 14px;
+    background: 0 0;
+    width: 100%;
+    padding: 10px;
+    resize: none;
+    box-sizing: border-box;
+  }
+  /*upload image */
+  .btn-file {
+    position: relative;
+    overflow: hidden;
+}
+.btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 100px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background: white;
+    cursor: inherit;
+    display: block;
+}
+
+#img-upload{
+    width: 100%;
+}
+  
+  
+  
