@@ -36,6 +36,15 @@ var PostSchema = new mongoose.Schema({
     PostStatus_ID: {
         type: Number,
         required: true
+    },
+    User_seller:{
+        type:String,
+        required:true
+    },
+    Numberphone:{
+        type:Number,
+        required:true
     }
+
 });
 module.exports = mongoose.model('Post', PostSchema); 
